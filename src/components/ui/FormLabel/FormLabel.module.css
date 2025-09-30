@@ -1,0 +1,7 @@
+.label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  margin-bottom: 0.25rem;
+}

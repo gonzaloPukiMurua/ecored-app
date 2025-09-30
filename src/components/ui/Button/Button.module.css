@@ -1,0 +1,89 @@
+.button {
+  /* Estilos Base */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  
+  /* Ancho 100% por defecto (Mobile First) */
+  width: 100%; 
+  
+  border-radius: var(--radius);
+  font-size: 1.125rem; 
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  
+  /* Transiciones: Necesarias para la animación de hover */
+  transition: 
+    background-color 0.2s, 
+    opacity 0.2s, 
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* --- ANCHO MÍNIMO PARA TABLET/DESKTOP (min-width: 768px) --- */
+@media (min-width: 768px) {
+    .button {
+        width: auto;
+        min-width: 240px;
+    }
+}
+
+/* --- VARIANTES DE COLOR (VARIANT) --- */
+
+.default {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.default:hover {
+
+}
+
+/* --- EFECTO HOVER PARA DESKTOP (min-width: 768px) --- */
+@media (min-width: 768px) {
+    .default:hover {
+        background-color: hsl(var(--accent)); 
+        transform: translateY(-2px); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    }
+    
+    .secondary:hover {
+        background-color: hsl(var(--secondary) / 0.9);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .tertiary:hover {
+        background-color: hsl(var(--accent) / 0.7); 
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* --- VARIANTES DE TAMAÑO (SIZE) --- */
+.defaultSize {
+  padding: 1rem 1.5rem; 
+}
+
+.sm {
+  padding: 0.75rem 1rem;
+}
+
+.lg {
+  padding: 1.25rem 2rem;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border-radius: 50%;
+}

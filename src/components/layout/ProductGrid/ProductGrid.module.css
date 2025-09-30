@@ -1,0 +1,34 @@
+.gridContainer {
+  width: 100%;
+}
+
+.header {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: hsl(var(--foreground));
+}
+
+.grid {
+  /* Mobile First: Grilla de 2 columnas con repetición automática */
+  display: grid;
+  gap: 1rem;
+  
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+/* Tablet: Aumentamos el tamaño mínimo y el gap */
+@media (min-width: 640px) {
+  .grid {
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+/* Desktop: Grilla más densa */
+@media (min-width: 1024px) {
+  .grid {
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Mínimo 4-5 columnas */
+  }
+}

@@ -1,0 +1,38 @@
+.pageWrapper {
+  padding: 2rem 1.5rem;
+  width: 100%;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: hsl(var(--foreground));
+  text-align: center;
+}
+
+.contentLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.resultsArea {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .pageWrapper {
+    padding: 3rem; 
+  }
+  
+  .contentLayout {
+    flex-direction: row;
+    gap: 3rem;
+  }
+  
+  .resultsArea {
+    flex-grow: 1; 
+  }
+}

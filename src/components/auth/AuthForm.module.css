@@ -1,0 +1,41 @@
+.authWrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.formTitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.submitButton {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.toggleText {
+    text-align: center;
+    font-size: 0.9rem;
+    color: hsl(var(--foreground));
+}
+
+.toggleLink {
+    color: hsl(var(--primary));
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.toggleLink:hover {
+    color: hsl(var(--accent));
+    text-decoration: underline;
+}

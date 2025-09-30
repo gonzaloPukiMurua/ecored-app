@@ -1,0 +1,16 @@
+.authLayout {
+  padding: 2rem 1rem; 
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Media Query para Tabletas y Escritorios (ajusta el padding) */
+@media (min-width: 640px) {
+  .authLayout {
+    padding: 4rem 2rem; 
+    align-items: center;
+  }
+}

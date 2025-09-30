@@ -1,0 +1,42 @@
+.toggleButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+/* Ocultar en pantallas grandes */
+@media (min-width: 768px) {
+  .toggleButton {
+    display: none;
+  }
+}
+
+.iconLine {
+  width: 2rem;
+  height: 0.1875rem;
+  background: hsl(var(--foreground));
+  border-radius: 0.625rem;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+.toggleButton.open .iconLine:first-child {
+  transform: rotate(45deg);
+}
+
+.toggleButton.open .iconLine:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.toggleButton.open .iconLine:last-child {
+  transform: rotate(-45deg);
+}

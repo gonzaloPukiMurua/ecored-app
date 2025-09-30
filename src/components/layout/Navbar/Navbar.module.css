@@ -1,0 +1,49 @@
+.navbar {
+  width: 100%;
+  padding: 1rem 1.5rem; 
+  background-color: hsl(var(--background));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: hsl(var(--primary));
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Ocultar navLinks por defecto (Mobile First) */
+.desktopNavLinks {
+  display: none; 
+}
+
+.navLink {
+  color: hsl(var(--foreground));
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navLink:hover {
+  color: hsl(var(--accent));
+}
+
+/* Media Query para tabletas y escritorios (min-width: 768px) */
+@media (min-width: 768px) {
+  .navbar {
+    padding: 1rem 3rem; 
+  }
+  
+  /* Mostrar navLinks en desktop */
+  .desktopNavLinks {
+    display: flex;
+    gap: 1.5rem;
+  }
+}
