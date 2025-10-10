@@ -20,7 +20,11 @@ export function Navbar() {
     logout()
     router.push('/') // Redirigir al home o login al cerrar sesión
   }
-
+  if(user){
+    console.log("Este es el user: ", user.name)
+  }else{
+    console.log("User indefinido")
+  }
   return (
     <>
       <nav className={styles.navbar}>

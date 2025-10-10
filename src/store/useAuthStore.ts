@@ -1,70 +1,74 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import { AuthService } from '@/services/auth/auth.service'
-import type { LoginRequest, RegisterRequest, UserResponse } from '@/services/auth/types'
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { AuthService } from '@/services/auth/auth.service';
+import type { AxiosError } from 'axios';
+import type { LoginRequest, RegisterRequest, UserResponse } from '@/services/auth/types';
 
 interface AuthState {
-  user: UserResponse | null
-  token: string | null
-  loading: boolean
-  error: string | null
+  user: UserResponse | null;
+  loading: boolean;
+  error: string | null;
 
-  login: (data: LoginRequest) => Promise<void>
-  register: (data: RegisterRequest) => Promise<void>
-  logout: () => void
+  login: (data: LoginRequest) => Promise<void>;
+  register: (data: RegisterRequest) => Promise<void>;
+  fetchUserProfile: () => Promise<void>;
+  logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
-      token: null,
       loading: false,
       error: null,
 
-      // -------------------------------
-      // LOGIN
-      // -------------------------------
-      login: async (data: LoginRequest) => {
-        set({ loading: true, error: null })
+      login: async (data) => {
+        console.log("Estoy en el authStore.login. Este es data: ", data);
+        set({ loading: true, error: null });
         try {
-          const res = await AuthService.login(data)
-
-          // Guardar usuario + token
-          set({ user: res, token: res.token || null, loading: false })
-        } catch (err: any) {
+          await AuthService.login(data);
+          const user = await AuthService.getProfile();
+          set({ user, loading: false });
+        } catch (err: unknown) {
+          const error = err as AxiosError<{ message?: string }>;
+          const message = error.response?.data?.message || 'Error al iniciar sesión';
           set({
-            error: err.response?.data?.message || 'Error al iniciar sesión',
+            error: message,
             loading: false,
-          })
+          });
         }
       },
 
-      // -------------------------------
-      // REGISTER
-      // -------------------------------
-      register: async (data: RegisterRequest) => {
-        set({ loading: true, error: null })
+      register: async (data) => {
+        set({ loading: true, error: null });
         try {
-          const res = await AuthService.register(data)
-          set({ user: res, token: res.token || null, loading: false })
-        } catch (err: any) {
+          await AuthService.register(data);
+          const user = await AuthService.getProfile();
+          set({ user, loading: false });
+        } catch (err: unknown) {
+          const error = err as AxiosError<{ message?: string }>;
+          const message = error.response?.data?.message || 'Error al registrarse';
           set({
-            error: err.response?.data?.message || 'Error al registrarse',
+            error: message,
             loading: false,
-          })
+          });
         }
       },
 
-      // -------------------------------
-      // LOGOUT
-      // -------------------------------
+      fetchUserProfile: async () => {
+        try {
+          const user = await AuthService.getProfile();
+          set({ user });
+        } catch {
+          set({ user: null });
+        }
+      },
+
       logout: () => {
-        set({ user: null, token: null })
+        AuthService.logout();
+        set({ user: null });
       },
     }),
-    {
-      name: 'auth-storage', // 👈 persistencia local (localStorage)
-    }
+    { name: 'auth-storage' }
   )
-)
+);
