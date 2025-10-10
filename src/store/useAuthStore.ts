@@ -1,21 +1,16 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { AuthService } from '@/services/auth'
-
-interface User {
-  id: string
-  name: string
-  email: string
-}
+import { AuthService } from '@/services/auth/auth.service'
+import type { LoginRequest, RegisterRequest, UserResponse } from '@/services/auth/types'
 
 interface AuthState {
-  user: User | null
+  user: UserResponse | null
   token: string | null
   loading: boolean
   error: string | null
 
-  login: (email: string, password: string) => Promise<void>
-  register: (email: string, password: string, confirmPassword: string) => Promise<void>
+  login: (data: LoginRequest) => Promise<void>
+  register: (data: RegisterRequest) => Promise<void>
   logout: () => void
 }
 
@@ -27,29 +22,49 @@ export const useAuthStore = create<AuthState>()(
       loading: false,
       error: null,
 
-      login: async (email, password) => {
+      // -------------------------------
+      // LOGIN
+      // -------------------------------
+      login: async (data: LoginRequest) => {
         set({ loading: true, error: null })
         try {
-          const res = await AuthService.login({ email, password })
-          
-          set({ user: res.user, token: res.token, loading: false })
+          const res = await AuthService.login(data)
+
+          // Guardar usuario + token
+          set({ user: res, token: res.token || null, loading: false })
         } catch (err: any) {
-          set({ error: err.response?.data?.message || 'Error al iniciar sesión', loading: false })
+          set({
+            error: err.response?.data?.message || 'Error al iniciar sesión',
+            loading: false,
+          })
         }
       },
 
-      register: async (email, password, confirmPassword) => {
+      // -------------------------------
+      // REGISTER
+      // -------------------------------
+      register: async (data: RegisterRequest) => {
         set({ loading: true, error: null })
         try {
-          const res = await AuthService.register({ email, password, confirmPassword })
-          set({ user: res.user, token: res.token, loading: false })
+          const res = await AuthService.register(data)
+          set({ user: res, token: res.token || null, loading: false })
         } catch (err: any) {
-          set({ error: err.response?.data?.message || 'Error al registrarse', loading: false })
+          set({
+            error: err.response?.data?.message || 'Error al registrarse',
+            loading: false,
+          })
         }
       },
 
-      logout: () => set({ user: null, token: null }),
+      // -------------------------------
+      // LOGOUT
+      // -------------------------------
+      logout: () => {
+        set({ user: null, token: null })
+      },
     }),
-    { name: 'auth-storage' }
+    {
+      name: 'auth-storage', // 👈 persistencia local (localStorage)
+    }
   )
 )
