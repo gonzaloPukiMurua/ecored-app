@@ -12,7 +12,7 @@
 
 /* --- MOBILE & TABLET (CARRUSEL) --- */
 
-.productsContainer {
+.listingContainer {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
@@ -21,7 +21,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.productsContainer::-webkit-scrollbar {
+.listingContainer::-webkit-scrollbar {
   display: none;
 }
 
@@ -39,7 +39,7 @@
     padding: 0 3rem 1rem 3rem;
   }
 
-  .productsContainer {
+  .listingContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     overflow-x: hidden;

@@ -1,6 +1,6 @@
 // src/app/home/page.tsx
 import * as React from 'react';
-import { ProductListing } from '@/components/layout/ProductListing/ProductListing';
+import { Listing } from '@/components/layout/Listing/Listing';
 import styles from './home.module.css';
 
 const dummyProducts = [
@@ -17,19 +17,19 @@ export default function HomePage() {
     <div className={styles.homeContainer}>
       <h1 className={styles.pageTitle}>Explorar EcoRED</h1>
 
-      <ProductListing 
+      <Listing 
         title="Productos Cerca Tuyo" 
-        products={dummyProducts.slice(0, 4)} 
+        listings={dummyProducts.slice(0, 4)} 
       />
 
-      <ProductListing 
+      <Listing 
         title="Basado en tus Preferencias" 
-        products={dummyProducts.slice(2)} 
+        listings={dummyProducts.slice(2)} 
       />
 
-      <ProductListing 
+      <Listing 
         title="Recién Publicados" 
-        products={dummyProducts.slice(1, 5)} 
+        listings={dummyProducts.slice(1, 5)} 
       />
       
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { ProductDetailView } from '@/components/layout/ProductDetailView/ProductDetailView';
+import { ListingDetailView } from '@/components/layout/ListingDetailView/ListingDetailView';
 
 const getDummyProduct = (slug: string) => ({
     id: 1,
@@ -28,10 +28,10 @@ interface PageProps {
     params: { slug: string };
 }
 
-export default function ProductDetailPage({ params }: PageProps) {
-    const productData = getDummyProduct(params.slug);
+export default function ListingDetailPage({ params }: PageProps) {
+    const listingData = getDummyProduct(params.slug);
     
     return (
-        <ProductDetailView product={productData} />
+        <ListingDetailView listing={listingData} />
     );
 }

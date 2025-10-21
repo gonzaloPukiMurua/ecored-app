@@ -1,8 +1,8 @@
 import * as React from 'react';
-import styles from './ProductDetailView.module.css';
+import styles from './ListingDetailView.module.css';
 import { Button } from '@/components/ui/Button/Button';
 
-interface ProductDetail {
+interface ListingDetail {
   id: number;
   title: string;
   price: number;
@@ -13,12 +13,12 @@ interface ProductDetail {
   specifications: { label: string; value: string }[];
 }
 
-interface ProductDetailViewProps {
-  product: ProductDetail;
+interface ListingDetailViewProps {
+  listing: ListingDetail;
 }
 
-export function ProductDetailView({ product }: ProductDetailViewProps) {
-  const { title, price, description, images, category, location, specifications } = product;
+export function ListingDetailView({ listing }: ListingDetailViewProps) {
+  const { title, price, description, images, category, location, specifications } = listing;
   const [mainImage, setMainImage] = React.useState(images[0]);
   
   return (
