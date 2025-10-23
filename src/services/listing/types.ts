@@ -1,5 +1,7 @@
 // Tipos basados en la entidad Listing del backend
 
+import { CategoryResponse } from "../category/types"
+
 export enum ItemCondition {
   NEW = 'nuevo',
   LIKE_NEW = 'como_nuevo',
@@ -34,7 +36,7 @@ export interface ListingResponse {
   listing_id: string;
   title: string;
   description: string;
-  category: string;
+  category: CategoryResponse;
   subcategory?: string;
   item_condition: ItemCondition;
   status: ListingStatus;

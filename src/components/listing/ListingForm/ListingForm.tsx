@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/Button/Button'
 import { useRouter } from 'next/navigation'
 import { ListingService } from '@/services/listing'
 import { CategoryService, CategoryResponse } from '@/services/category/category.service'
-import { ItemCondition } from '@/services/listing/types'
 import styles from './ListingForm.module.css'
 
 // Enumeraciones basadas en el backend
@@ -45,16 +44,18 @@ export function ListingForm() {
     setError(null)
 
     const form = new FormData(e.currentTarget)
+    const files = form.getAll('files') as File[]
+    const data = new FormData()
+    data.append('title', form.get('title') as string)
+    data.append('description', form.get('description') as string)
+    data.append('category_id', form.get('category') as string)
+    data.append('item_condition', form.get('item_condition') as string)
+    data.append('zone_text', form.get('zone_text') as string)
+    if (form.get('lat')) data.append('lat', form.get('lat') as string)
+    if (form.get('lng')) data.append('lng', form.get('lng') as string)
 
-    const data = {
-      title: form.get('title') as string,
-      description: form.get('description') as string,
-      category_id: form.get('category') as string,
-      item_condition: form.get('item_condition') as ItemCondition,
-      zone_text: form.get('zone_text') as string,
-      lat: parseFloat(form.get('lat') as string) || null,
-      lng: parseFloat(form.get('lng') as string) || null,
-    }
+    // Adjuntamos los archivos
+    files.forEach(file => data.append('files', file))
 
     try {
       const res = await ListingService.create(data)

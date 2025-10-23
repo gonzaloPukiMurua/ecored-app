@@ -6,7 +6,7 @@ import type {
 
 export const ListingService = {
 
-  async create(data: CreateListingRequest): Promise<ListingResponse> {
+  async create(data: FormData): Promise<ListingResponse> {
     const res = await axiosClient.post('/listing', data)
     return res.data
   },

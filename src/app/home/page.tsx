@@ -1,37 +1,52 @@
 // src/app/home/page.tsx
-import * as React from 'react';
-import { Listing } from '@/components/layout/Listing/Listing';
-import styles from './home.module.css';
+// src/app/home/page.tsx
+'use client';
 
-const dummyProducts = [
-  { id: 1, imageUrl: 'https://via.placeholder.com/300x225?text=Cerca+Mío', title: 'Compostera Orgánica', subtitle: 'Recién publicado', price: 45.00 },
-  { id: 2, imageUrl: 'https://via.placeholder.com/300x225?text=Preferencias', title: 'Semillas de Albahaca', subtitle: 'Para tu huerta', price: 5.50 },
-  { id: 3, imageUrl: 'https://via.placeholder.com/300x225?text=Publicado', title: 'Canasta de Mimbre', subtitle: 'Ideal para la compra', price: 20.00 },
-  { id: 4, imageUrl: 'https://via.placeholder.com/300x225?text=Nuevo', title: 'Aceite de Coco (Orgánico)', subtitle: 'Reciclaje', price: 12.00 },
-  { id: 5, imageUrl: 'https://via.placeholder.com/300x225?text=Populares', title: 'Guantes de Jardinería', subtitle: 'De cuero reciclado', price: 18.00 },
-  { id: 6, imageUrl: 'https://via.placeholder.com/300x225?text=Oferta', title: 'Kit de Cultivo Urbano', subtitle: 'Perfecto para balcones', price: 35.00 },
-];
+import * as React from 'react';
+import { ListingCarousel } from '@/components/layout/ListingCarousel/ListingCarousel';
+import styles from './home.module.css';
+import { ListingService } from '@/services/listing/listing.service';
+import type { ListingResponse } from '@/services/listing/types';
 
 export default function HomePage() {
+  const [listings, setListings] = React.useState<ListingResponse[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    async function fetchListings() {
+      try {
+        const data = await ListingService.getAll();
+        console.log("Esto recivo del service: ", data);
+        setListings(data);
+      } catch (err) {
+        console.error('Error al obtener los listados:', err);
+        setError('No se pudieron cargar los productos');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchListings();
+  }, []);
+
   return (
     <div className={styles.homeContainer}>
       <h1 className={styles.pageTitle}>Explorar EcoRED</h1>
 
-      <Listing 
-        title="Productos Cerca Tuyo" 
-        listings={dummyProducts.slice(0, 4)} 
-      />
+      {loading && <p>Cargando productos...</p>}
+      {error && <p className={styles.error}>{error}</p>}
 
-      <Listing 
-        title="Basado en tus Preferencias" 
-        listings={dummyProducts.slice(2)} 
-      />
+      {!loading && !error && listings.length > 0 && (
+        <ListingCarousel
+          title="Productos Cerca Tuyo"
+          listings={listings}
+        />
+      )}
 
-      <Listing 
-        title="Recién Publicados" 
-        listings={dummyProducts.slice(1, 5)} 
-      />
-      
+      {!loading && !error && listings.length === 0 && (
+        <p>No hay productos publicados aún.</p>
+      )}
     </div>
   );
 }

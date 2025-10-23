@@ -11,13 +11,13 @@
 }
 
 /* --- MOBILE & TABLET (CARRUSEL) --- */
-
 .listingContainer {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
   padding: 0 1.5rem;
   padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -25,15 +25,14 @@
   display: none;
 }
 
-
 .itemWrapper {
   flex-shrink: 0;
+  scroll-snap-align: start;
   width: 70vw;
   max-width: 250px;
 }
 
 /* --- DESKTOP (GRILLA) --- */
-
 @media (min-width: 768px) {
   .title {
     padding: 0 3rem 1rem 3rem;
@@ -48,7 +47,7 @@
   }
 
   .itemWrapper {
-    width: auto;
+    width: 100%;
     max-width: none;
   }
 }
